@@ -235,8 +235,10 @@ def render_main_app():
                         ts = datetime.datetime.now().strftime("%Y%m%d-%H%M")
                         safe_user = st.session_state.user.replace("@","_").replace(".","_")
                         fn = f"{ts}_{safe_user}_{loc}.jpg"
+
+                        img = Image.open(f).convert('RGB')
+                        img.save(os.path.join(Config.UPLOAD_FOLDER, fn))
                         
-                        Image.open(f).save(os.path.join(Config.UPLOAD_FOLDER, fn))
                         DataManager.log_contribution(loc)
                         st.success("✅ Uploaded!")
                         st.balloons()
@@ -276,4 +278,5 @@ def main():
         render_main_app()
 
 if __name__ == "__main__":
+
     main()
